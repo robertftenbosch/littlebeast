@@ -5,7 +5,7 @@ set -e
 echo "=== UGV Rover Setup ==="
 
 # ROS2 packages
-echo "[1/4] ROS2 packages installeren..."
+echo "[1/5] ROS2 packages installeren..."
 sudo apt update
 sudo apt install -y \
     ros-humble-nav2-bringup \
@@ -20,15 +20,21 @@ sudo apt install -y \
     ros-humble-nav2-map-server
 
 # Python dependencies
-echo "[2/4] Python dependencies installeren..."
+echo "[2/5] Python dependencies installeren..."
 pip3 install -r /home/nvidia/robot/requirements.txt
 
 # Serial permissions
-echo "[3/4] Serial permissions instellen..."
+echo "[3/5] Serial permissions instellen..."
 sudo usermod -aG dialout $USER
 
+# Symlinks voor robot_bringup package
+echo "[4/5] Symlinks aanmaken..."
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+ln -sfn "$REPO_DIR/launch" "$REPO_DIR/robot_bringup/launch"
+ln -sfn "$REPO_DIR/config" "$REPO_DIR/robot_bringup/config"
+
 # LiDAR driver (pas aan voor jouw model)
-echo "[4/4] LiDAR driver..."
+echo "[5/5] LiDAR driver..."
 echo "LiDAR driver moet handmatig geinstalleerd worden."
 echo "Zie: https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2"
 
