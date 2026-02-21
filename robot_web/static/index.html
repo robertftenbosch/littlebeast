@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGV Rover Control</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>UGV Rover</h1>
+        <div id="status-bar">
+            <span id="battery">-- V</span>
+            <span id="speed">0.00 m/s</span>
+            <span id="position">x: 0.00  y: 0.00</span>
+            <span id="mode-display">Manual</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Camera + Kaart -->
+        <div class="panel-row">
+            <div class="panel" id="camera-panel">
+                <h2>Camera</h2>
+                <img id="camera-feed" src="/video" alt="Camera feed">
+            </div>
+            <div class="panel" id="map-panel">
+                <h2>Kaart</h2>
+                <canvas id="map-canvas" width="400" height="400"></canvas>
+                <div class="map-controls">
+                    <button onclick="saveMap()">Kaart Opslaan</button>
+                    <select id="map-select" onchange="loadMap()"></select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Besturing + Chat -->
+        <div class="panel-row">
+            <div class="panel" id="control-panel">
+                <h2>Besturing</h2>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="manual">Manual</button>
+                    <button class="mode-btn" data-mode="navigate">Navigate</button>
+                    <button class="mode-btn" data-mode="explore">Explore</button>
+                </div>
+                <div id="joystick-container">
+                    <div id="joystick-zone"></div>
+                </div>
+                <div id="nav-controls" style="display:none;">
+                    <button onclick="cancelNav()">Stop Navigatie</button>
+                </div>
+            </div>
+            <div class="panel" id="chat-panel">
+                <h2>Chat</h2>
+                <div id="chat-messages"></div>
+                <div id="chat-input">
+                    <input type="text" id="chat-text" placeholder="Typ een commando..."
+                           onkeydown="if(event.key==='Enter')sendChat()">
+                    <button onclick="sendChat()">Stuur</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waypoints -->
+        <div class="panel-row">
+            <div class="panel" id="waypoint-panel">
+                <h2>Waypoints</h2>
+                <div id="waypoint-list"></div>
+                <div class="waypoint-add">
+                    <input type="text" id="wp-name" placeholder="Naam (bijv. keuken)">
+                    <button onclick="addWaypointAtRobot()">Huidige positie opslaan</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.2/nipplejs.min.js"></script>
+    <script src="/static/js/joystick.js"></script>
+    <script src="/static/js/map.js"></script>
+    <script src="/static/js/chat.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

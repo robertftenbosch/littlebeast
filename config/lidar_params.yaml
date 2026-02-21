@@ -1,0 +1,21 @@
+# LiDAR driver parameters
+# Pas aan op basis van je LiDAR model (LD06, LD19, STL27L)
+
+lidar:
+  ros__parameters:
+    # Algemeen
+    frame_id: "laser"
+    scan_topic: "/scan"
+
+    # LD19 / STL27L specifiek
+    port: "/dev/ttyUSB0"
+    baudrate: 230400
+    angle_min: -3.14159          # -180 graden
+    angle_max: 3.14159           #  180 graden
+    range_min: 0.05              # 5 cm
+    range_max: 12.0              # 12 meter
+    scan_frequency: 10.0         # Hz
+
+    # Filters
+    angle_compensate: true
+    inverted: false

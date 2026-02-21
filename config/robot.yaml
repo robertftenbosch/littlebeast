@@ -1,0 +1,42 @@
+robot:
+  name: "ugv_rover"
+  wheelbase: 0.175          # meters, afstand tussen wielen
+  wheel_radius: 0.033       # meters
+  max_linear_speed: 0.5     # m/s
+  max_angular_speed: 2.0    # rad/s
+  encoder_ticks_per_rev: 1320
+
+serial:
+  port: "/dev/ttyTHS0"
+  baudrate: 115200
+  timeout: 0.1
+  # Init-sequentie bij startup
+  init_commands:
+    - '{"T":142}'            # Reset/init
+    - '{"T":131}'            # Mode set
+    - '{"T":143}'            # Enable feedback
+
+camera:
+  device: 0                  # /dev/video0
+  width: 640
+  height: 480
+  fps: 30
+
+web:
+  host: "0.0.0.0"
+  port: 8000
+
+llm:
+  backend: "local"           # local | openai | anthropic
+  model: "llama3.2"
+  base_url: "http://localhost:11434"
+  api_key: ""                # voor cloud providers
+  system_prompt: >
+    Je bestuurt een robot in een appartement. Je kunt:
+    navigeren naar locaties, rondkijken, stoppen, de kaart beschrijven.
+    Reageer beknopt en geef aan welke actie je uitvoert.
+
+waypoints: {}
+  # Voorbeeld:
+  # keuken: {x: 2.5, y: 1.0, theta: 0.0}
+  # slaapkamer: {x: -1.0, y: 3.0, theta: 1.57}
